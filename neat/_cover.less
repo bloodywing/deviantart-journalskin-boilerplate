@@ -1,0 +1,18 @@
+.cover(@minheight: 500px, @noclip: true) {
+  margin: 0px -40px;
+  img {
+    &:first-child {
+      top: 0px;
+    }
+    left: 0px;
+    text-align: center;
+    // Set a specific height
+    min-height: @minheight;
+
+    // Create the parallax scrolling effect
+
+    position: if(@noclip, absolute, relative);
+    z-index: if(@noclip, -1, auto);
+    width: 100%;
+  }
+}

@@ -1,0 +1,41 @@
+@grs: 1,2,3;
+.negate-box-margin {
+  background: @da-white;
+  color: @da-gray1;
+
+  max-width: 975px;
+
+  //div.negate-box-margin div.gr-box.gr-genericbox div.gr-top div.gr
+  .gr-box {
+    each(@grs {
+      .gr@{value} {
+        display: none;
+      }
+  });
+    .gr-top {
+      border: unset;
+      .gr {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        background-color: inherit;
+        border: unset;
+      }
+      img {
+        display: none;
+      }
+    }
+  }
+
+  .text {
+    padding: 15px!important;
+  }
+
+  .gr-body {
+    border: unset;
+  }
+}
+
+
+.tri {
+  display: none;
+}

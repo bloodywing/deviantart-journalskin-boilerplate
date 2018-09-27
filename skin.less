@@ -3,3 +3,12 @@
 
 @import (reference) "_deviantart-ref"; /* This line is option and includes only stuff to help you writing your skin */
 @import (once) "_helper";
+
+@import (once) "_reset";
+
+.my-cover {
+  .cover(@noclip: false);
+  &.noclip{
+    .cover(@noclip: true);
+  }
+}
