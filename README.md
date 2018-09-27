@@ -22,3 +22,5 @@ touching `skin.less`
 
 My Skeleton uses the "new" Journal skin, and a lot of examples on the site are with the old Journal Markup
 like the popular Hero skin.
+
+Click [here to see it in Action](https://bloodywing.github.io/deviantart-journalskin-boilerplate/journal-skeleton.html)
