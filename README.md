@@ -24,3 +24,8 @@ My Skeleton uses the "new" Journal skin, and a lot of examples on the site are w
 like the popular Hero skin.
 
 Click [here to see it in Action](https://bloodywing.github.io/deviantart-journalskin-boilerplate/journal-skeleton.html)
+
+### Why are there head-html and footer.html
+
+You can add a header and footer on DeviantArt to your Skin, you'll see those 2 fields when editing a skin on DA
+The 2 html files are automatically included in the journal-skeleton via ajax.
