@@ -1,210 +1,52 @@
-/*
- *	CSSrefresh v1.0.3
- *
- *	Copyright (c) 2012 Fred Heusschen
- *	www.frebsite.nl
- *
- *	Dual licensed under the MIT and GPL licenses.
- *	http://en.wikipedia.org/wiki/MIT_License
- *	http://en.wikipedia.org/wiki/GNU_General_Public_License
- */
+StyleSheetList.prototype.reload_interval = 1000; // 1 second
 
-(function() {
-
-    function createCookie(name,value,days)
-    {
-        if (days)
-        {
-            var date = new Date();
-            date.setTime(date.getTime()+(days*24*60*60*1000));
-            var expires = "; expires="+date.toGMTString();
+CSSStyleSheet.prototype.reload = function reload(){
+    // Reload one stylesheet
+    // usage: document.styleSheets[0].reload()
+    // return: URI of stylesheet if it could be reloaded, overwise undefined
+    if (this.href) {
+        var href = this.href;
+        var i = href.indexOf('?'),
+            last_reload = 'last_reload=' + (new Date).getTime();
+        if (i < 0) {
+            href += '?' + last_reload;
+        } else if (href.indexOf('last_reload=', i) < 0) {
+            href += '&' + last_reload;
+        } else {
+            href = href.replace(/last_reload=\d+/, last_reload);
         }
-        else var expires = "";
-        document.cookie = name+"="+value+expires+"; path=/";
+        return this.ownerNode.href = href;
     }
+};
 
-    function readCookie(name)
-    {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++)
-        {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-
-    function eraseCookie(name)
-    {
-        createCookie(name,"",-1);
-    }
-
-
-    var phpjs = {
-
-        array_filter: function( arr, func )
-        {
-            var retObj = {};
-            for ( var k in arr )
-            {
-                if ( func( arr[ k ] ) )
-                {
-                    retObj[ k ] = arr[ k ];
-                }
-            }
-            return retObj;
-        },
-        filemtime: function( file )
-        {
-            var headers = this.get_headers( file, 1 );
-            return ( headers && headers[ 'Last-Modified' ] && Date.parse( headers[ 'Last-Modified' ] ) / 1000 ) || false;
-        },
-        get_headers: function( url, format )
-        {
-            var req = window.ActiveXObject ? new ActiveXObject( 'Microsoft.XMLHTTP' ) : new XMLHttpRequest();
-            if ( !req )
-            {
-                throw new Error('XMLHttpRequest not supported.');
-            }
-
-            var tmp, headers, pair, i, j = 0;
-
-            try
-            {
-                req.open( 'HEAD', url, false );
-                req.send( null );
-                if ( req.readyState < 3 )
-                {
-                    return false;
-                }
-                tmp = req.getAllResponseHeaders();
-                tmp = tmp.split( '\n' );
-                tmp = this.array_filter( tmp, function( value )
-                {
-                    return value.toString().substring( 1 ) !== '';
-                });
-                headers = format ? {} : [];
-
-                for ( i in tmp )
-                {
-                    if ( format )
-                    {
-                        pair = tmp[ i ].toString().split( ':' );
-                        headers[ pair.splice( 0, 1 ) ] = pair.join( ':' ).substring( 1 );
-                    }
-                    else
-                    {
-                        headers[ j++ ] = tmp[ i ];
-                    }
-                }
-
-                return headers;
-            }
-            catch ( err )
-            {
-                return false;
-            }
-        }
-    };
-
-    var cssRefresh = function( links ) {
-
-        this.reloadFile = function( links )
-        {
-            for ( var a = 0, l = links.length; a < l; a++ )
-            {
-                var link = links[ a ],
-                    newTime = phpjs.filemtime( this.getRandom( link.href ) );
-
-                //	has been checked before
-                if ( link.last )
-                {
-                    //	has been changed
-                    if ( link.last != newTime )
-                    {
-                        //	reload
-                        link.elem.setAttribute( 'href', this.getRandom( link.href ) );
-                    }
-                }
-
-                //	set last time checked
-                link.last = newTime;
-            }
-            setTimeout( function()
-            {
-                this.reloadFile( links );
-            }, 1000 );
-        };
-
-        this.getRandom = function( f )
-        {
-            return f + '?x=' + Math.random();
-        };
-
-
-        this.reloadFile( links );
-    };
-
-    var getLinks = function()
-    {
-        var files = document.getElementsByTagName( 'link' ),
-            links = [];
-
-        for ( var a = 0, l = files.length; a < l; a++ )
-        {
-            var elem = files[ a ],
-                rel = elem.rel;
-
-            if ( typeof rel != 'string' || rel.length == 0 || rel == 'stylesheet' )
-            {
-                links.push({
-                    'elem' : elem,
-                    'href' : elem.getAttribute( 'href' ).split( '?' )[ 0 ],
-                    'last' : false
-                });
-            }
-        }
-        return links;
-    };
-
-    var links = getLinks(),
-        wp = false;
-
-    for ( var a = 0, l = links.length; a < l; a++ )
-    {
-        if ( links[ a ].href.indexOf( 'wp-content/' ) > -1 )
-        {
-            wp = true;
-            break;
+StyleSheetList.prototype.reload = function reload(){
+    // Reload all stylesheets
+    // usage: document.styleSheets.reload()
+    for (var i=0; i<this.length; i++) {
+        if(!this[i].href.includes('deviantart.')) {
+            this[i].reload();
         }
     }
+};
 
-    if ( wp )
-    {
-        var wpra = readCookie('wprefresh-asked');
-        if ( wpra )
-        {
-            cssRefresh( links );
-        }
-        else
-        {
-            if ( confirm( 'Is this a WordPress site? Try WP Refresh!' ) )
-            {
-                createCookie( 'wprefresh-asked', 'yes', 7 );
-                window.open( 'http://wprefresh.frebsite.nl', 'wpr' );
-            }
-            else
-            {
-                createCookie( 'wprefresh-asked', 'yes', 1 );
-                cssRefresh( links );
-            }
-        }
+StyleSheetList.prototype.start_autoreload = function start_autoreload(miliseconds /*Number*/){
+    // usage: document.styleSheets.start_autoreload()
+    if (!start_autoreload.running) {
+        var styles = this;
+        start_autoreload.running = setInterval(function reloading(){
+            styles.reload();
+        }, miliseconds || this.reload_interval);
     }
-    else
-    {
-        cssRefresh( links );
-    }
+    return start_autoreload.running;
+};
 
-})();
+StyleSheetList.prototype.stop_autoreload = function stop_autoreload(){
+    // usage: document.styleSheets.stop_autoreload()
+    clearInterval(this.start_autoreload.running);
+    this.start_autoreload.running = null;
+};
+
+StyleSheetList.prototype.toggle_autoreload = function toggle_autoreload(){
+    // usage: document.styleSheets.toggle_autoreload()
+    return this.start_autoreload.running ? this.stop_autoreload() : this.start_autoreload();
+};
