@@ -1,14 +1,31 @@
 /* Put in you less code here */
 /* At this point DeviantArt support only CSS 2 everything with CSS 3 productes errors on DA when you try to save your skin*/
-
-@import (reference) "_deviantart-ref"; /* This line is option and includes only stuff to help you writing your skin */
+@import (reference) "_deviantart-ref";
+/* This line is option and includes only stuff to help you writing your skin */
 @import (once) "_helper";
-
 @import (once) "_reset";
+
+@headlines: h1, h2, h3, h4, h5;
+@gr-body-overflow: visible;
+
+.gr-body {
+  overflow: @gr-body-overflow!important;
+}
 
 .my-cover {
   .cover(@noclip: false);
-  &.noclip{
+  &.noclip {
     .cover(@noclip: true);
   }
+
+}
+
+.text {
+each(@headlines {
+  @{value} {
+    font-weight: 400;
+    font-size: 30px;
+    color: @da-orange;
+  }
+});
 }
