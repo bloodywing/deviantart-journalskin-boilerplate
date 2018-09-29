@@ -1,0 +1,123 @@
+/* Put in you less code here */
+/* At this point DeviantArt support only CSS 2 everything with CSS 3 productes errors on DA when you try to save your skin*/
+/* This line is option and includes only stuff to help you writing your skin */
+.float.left {
+  float: left;
+}
+.float.right {
+  float: right;
+}
+.align.left {
+  text-align: left;
+}
+.align.right {
+  text-align: right;
+}
+.align.center {
+  text-align: center;
+}
+.align.justify {
+  text-align: justify;
+}
+.clear {
+  clear: both;
+}
+.negate-box-margin {
+  background: #fff;
+  color: #181a1b;
+  max-width: 975px;
+}
+.negate-box-margin .gr-box .gr1 {
+  display: none;
+}
+.negate-box-margin .gr-box .gr2 {
+  display: none;
+}
+.negate-box-margin .gr-box .gr3 {
+  display: none;
+}
+.negate-box-margin .gr-box .gr-top {
+  background-color: inherit;
+  color: inherit;
+  border: unset;
+}
+.negate-box-margin .gr-box .gr-top .gr {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  background-color: inherit;
+  border: unset;
+  color: inherit;
+}
+.negate-box-margin .gr-box .gr-top img {
+  display: none;
+}
+.negate-box-margin .text {
+  padding: 15px!important;
+  color: inherit;
+}
+.negate-box-margin .gr-body {
+  background-color: inherit;
+  border: unset;
+  color: inherit;
+}
+.tri {
+  display: none;
+}
+.gr-body {
+  overflow: visible !important;
+}
+.my-cover {
+  margin: 0px -40px;
+}
+.my-cover img {
+  left: 0px;
+  text-align: center;
+  min-height: 500px;
+  position: relative;
+  z-index: auto;
+  width: 100%;
+}
+.my-cover img:first-child {
+  top: 0px;
+  margin-top: -60px;
+}
+.my-cover.noclip {
+  margin: 0px -40px;
+}
+.my-cover.noclip img {
+  left: 0px;
+  text-align: center;
+  min-height: 500px;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+}
+.my-cover.noclip img:first-child {
+  top: 0px;
+  margin-top: -60px;
+}
+.text h1 {
+  font-weight: 400;
+  font-size: 30px;
+  color: #f7590a;
+}
+.text h2 {
+  font-weight: 400;
+  font-size: 30px;
+  color: #f7590a;
+}
+.text h3 {
+  font-weight: 400;
+  font-size: 30px;
+  color: #f7590a;
+}
+.text h4 {
+  font-weight: 400;
+  font-size: 30px;
+  color: #f7590a;
+}
+.text h5 {
+  font-weight: 400;
+  font-size: 30px;
+  color: #f7590a;
+}
